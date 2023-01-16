@@ -5,6 +5,7 @@
       pkgs.python310
       pkgs.python310Packages.feedparser
       pkgs.python310Packages.configparser
+      pkgs.python310Packages.requests
       pkgs.sqlite
     ];
 }
