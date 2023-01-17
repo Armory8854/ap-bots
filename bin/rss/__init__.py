@@ -11,7 +11,6 @@ def rss_retrieve(rss_feed, rss_counter):
     author = parsed_rss_feed_full['author']
     post = parsed_rss_feed_full['title']
     published_date = parsed_rss_feed_full['published']
-    id_url = parsed_rss_feed_full['id']
-#    print(author + " " + post + " " + published_date + " " + id_url)
+    id_url = parsed_rss_feed_full['link']
     return author, post, published_date, id_url
     
