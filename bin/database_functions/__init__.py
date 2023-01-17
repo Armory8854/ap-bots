@@ -4,6 +4,7 @@ import sqlite3
 # Define connection and cursor objects.
    
 def db_add(database_file, author, post, published_date, id_url):
+    print("Adding new posts to the database...")
     connection = sqlite3.connect(database_file)
     cursor = connection.cursor()
     cursor.execute("CREATE TABLE IF NOT EXISTS tweets (author TEXT, post TEXT, published_date TEXT, id_url TEXT, uid INTEGER PRIMARY KEY AUTOINCREMENT, posted INTEGER, UNIQUE(id_url))")
@@ -13,6 +14,7 @@ def db_add(database_file, author, post, published_date, id_url):
     connection.close()
 
 def db_query(database_file):
+    print("Searhing for posts to make...")
     global new_posts
     connection = sqlite3.connect(database_file)
     cursor = connection.cursor()
@@ -21,8 +23,10 @@ def db_query(database_file):
     connection.close()
 
 def db_posted(database_file, new_post_uid):
+    print("Updating toots as posted in the database...")
     connection = sqlite3.connect(database_file)
     cursor = connection.cursor()
     just_posted = cursor.execute("UPDATE tweets SET posted=1 WHERE uid=?", [new_post_uid])
     new_posted = cursor.execute('SELECT * FROM tweets WHERE posted=1').fetchall()
-    print(new_posted)
+    connection.commit()
+    connection.close()
