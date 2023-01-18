@@ -1,22 +1,15 @@
-# General Imports
-import os
-import configparser
-
 # My imports
 from database_functions import *
-from rss import rss_retrieve
+from rss import *
 from ap import *
 
 # File variables go here
 config_file = "example.ini"
 database_file = "test/test.db"
 
-# Function like / function variables go here
-#config = configparser.ConfigParser()
-#config.read('./example.ini')
-
 # Test vars here
-rss_feed = "https://chimpsnw.org/blog/feed"
+rss_feed = ["https://chimpsnw.org/blog/feed", "https://www.youtube.com/feeds/videos.xml?channel_id=UCzJSKJKKhBlRGtAxc6T_g5w"]
+rss_feed_range = range(len(rss_feed))
 ap_instance = "https://iamterminally.online"
 api_key = "YZVJNMU3MWYTN2Q4NS0ZOGY5LWJKYJETMWIXMTM2MMZIMWQ1"
 
@@ -25,10 +18,12 @@ rss_counter = 0
 rss_counter_ceiling = 5
 
 while rss_counter < rss_counter_ceiling:
-    rss_function = rss_retrieve(rss_feed, rss_counter)
-    author, post, published_date, id_url = rss_function
-    db_add(database_file, author, post, published_date, id_url)
-    rss_counter = rss_counter + 1
+    for x in rss_feed_range:
+        print(x)
+        rss_function = rss_retrieve(rss_feed[x], rss_counter)
+        author, post, published_date, id_url = rss_function
+        db_add(database_file, author, post, published_date, id_url)
+        rss_counter = rss_counter + 1
 
 new_posts = db_query(database_file)
 new_posts_len = range(len(new_posts))

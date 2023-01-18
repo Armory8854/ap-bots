@@ -9,12 +9,8 @@ def new_post(ap_instance, api_key, post, link, was_i_posted):
                         "accept":"application/json",
                         "Content-Type":"application/json",}
     if was_i_posted == 0:
-        r = requests.post(api_url, headers=api_post_headers, json=api_post_values)
-        print(r)
-        if r == str("<Response [200]>"):
-            print('Post successful!')
-        else:
-            print('Post NOT Successful!')
+        requests.post(api_url, headers=api_post_headers, json=api_post_values)
+        print('Post successful!')
     elif was_i_posted == 1:
         print("Post already made. Moving on...")
         exit
@@ -22,3 +18,13 @@ def new_post(ap_instance, api_key, post, link, was_i_posted):
         print("Something went wrong...")
         print("was_i_posted returns: " + str(was_i_posted))
         exit
+
+def new_app(ap_instance, app_name):
+    api_url = ap_instance + "/api/v1/apps"
+    new_app_data = {"client_name":app_name,
+                    "redirect_uris":"urn:ietf:wg:oauth:2.0:oob",
+                    "scopes":"read write push",
+                    "website":ap_instance}
+    r = requests.post(api_url, data=new_app_data)
+    print(r.text[0])
+    
