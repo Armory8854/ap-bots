@@ -3,10 +3,17 @@ from database_functions import *
 from rss import *
 from ap import *
 
+# General imports
+import logging
+
 # File variables go here
 working_dir = "/home/celer/git/ap-bots/"
 config_file = working_dir + "test/example.ini"
 database_file = working_dir + "test/test.db"
+logging_file = working_dir + "test/example.log"
+
+# Establish logging vars here
+logging.basicConfig(filename=logging_file, encoding='utf-8', level=logging.DEBUG)
 
 # Test vars here
 rss_feed = ["https://chimpsnw.org/blog/feed", "https://www.youtube.com/feeds/videos.xml?channel_id=UCzJSKJKKhBlRGtAxc6T_g5w"]
@@ -18,9 +25,20 @@ api_key = "YZVJNMU3MWYTN2Q4NS0ZOGY5LWJKYJETMWIXMTM2MMZIMWQ1"
 rss_counter = 0
 rss_counter_ceiling = 5
 
+# See if the database file exists. If not, create it
+# If we can't create it for some reason, log an error
+file_exists = os.path.exists(database_file)
+if file_exists == False:
+    logging.info("DB File does not exist. Attempting to create it")
+    try:
+        Path(database_file).touch()
+    except:
+        logging.critical("Cannot create Database file at " + database_file)
+        quit
+
 while rss_counter < rss_counter_ceiling:
     for x in rss_feed_range:
-        print(x)
+        logging.info("Pulling the last " + str(rss_counter_ceiling) + " articles from " + str(rss_feed_range) + "feeds")
         rss_function = rss_retrieve(rss_feed[x], rss_counter)
         author, post, published_date, id_url = rss_function
         db_add(database_file, author, post, published_date, id_url)

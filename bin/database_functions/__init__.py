@@ -1,10 +1,12 @@
-import os
+import os.path import exists
 import sqlite3
+import logging
+from pathlib import Path
 
 # Define connection and cursor objects.
-   
+logging.info("Adding new posts to the database...")
+
 def db_add(database_file, author, post, published_date, id_url):
-    print("Adding new posts to the database...")
     connection = sqlite3.connect(database_file)
     cursor = connection.cursor()
     cursor.execute("CREATE TABLE IF NOT EXISTS tweets (author TEXT, post TEXT, published_date TEXT, id_url TEXT, uid INTEGER PRIMARY KEY AUTOINCREMENT, posted INTEGER, UNIQUE(id_url))")
@@ -15,7 +17,7 @@ def db_add(database_file, author, post, published_date, id_url):
     connection.close()
 
 def db_query(database_file):
-    print("Searhing for posts to make...")
+    logging.info("Searhing for posts to make...")
     global new_posts
     connection = sqlite3.connect(database_file)
     cursor = connection.cursor()
