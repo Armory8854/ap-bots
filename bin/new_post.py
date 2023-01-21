@@ -28,7 +28,7 @@ rss_counter_ceiling = 5
 
 # See if the database file exists. If not, create it
 # If we can't create it for some reason, log an error
-file_exists = os.path.exists(database_file)
+file_exists = Path(database_file).is_file()
 if file_exists == False:
     logging.info("DB File does not exist. Attempting to create it")
     try:
