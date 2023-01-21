@@ -4,8 +4,9 @@ from rss import *
 from ap import *
 
 # File variables go here
-config_file = "example.ini"
-database_file = "test/test.db"
+working_dir = "/home/celer/git/ap-bots/"
+config_file = working_dir + "example.ini"
+database_file = working_dir + "test/test.db"
 
 # Test vars here
 rss_feed = ["https://chimpsnw.org/blog/feed", "https://www.youtube.com/feeds/videos.xml?channel_id=UCzJSKJKKhBlRGtAxc6T_g5w"]
