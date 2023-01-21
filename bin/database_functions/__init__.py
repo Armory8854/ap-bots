@@ -1,4 +1,4 @@
-import os.path import exists
+from os.path import exists
 import sqlite3
 import logging
 from pathlib import Path
