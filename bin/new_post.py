@@ -5,7 +5,7 @@ from ap import *
 
 # File variables go here
 working_dir = "/home/celer/git/ap-bots/"
-config_file = working_dir + "example.ini"
+config_file = working_dir + "test/example.ini"
 database_file = working_dir + "test/test.db"
 
 # Test vars here
